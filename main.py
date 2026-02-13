@@ -432,16 +432,6 @@ class Stun(StatusEffect):
         print(f"{target.nom} est étourdi et saute son tour !")
 
 
-class Brulure(StatusEffect):
-    def __init__(self, damage_per_turn=12, duration=2):
-        super().__init__("Brûlure", duration, trigger_moment="end_turn")
-        self.damage_per_turn = damage_per_turn
-
-    def apply(self, target):
-        target.pv -= self.damage_per_turn
-        print(f" {target.nom} brûle et perd {self.damage_per_turn} PV (reste {target.pv})")
-
-
 # ======================
 # Gestion générique des statuts
 # ======================
@@ -1218,7 +1208,7 @@ def jeu_principal():
         choix = input("→ ").strip()
         
         if choix == "1": jeu.deplacer("village")
-        elif choix == "2": 
+        elif choix == "2":
             jeu.deplacer("foret")
             jeu.nb_explorations_foret += 1
         elif choix == "3": jeu.deplacer("donjon")
