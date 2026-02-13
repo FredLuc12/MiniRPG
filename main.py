@@ -80,7 +80,6 @@ class Personnage:
         return self.force1 + bonus
 
     def equip_weapon(self, weapon):
-        """Équipe 1 arme, applique son bonus via la propriété attaque."""
         if not isinstance(weapon, Weapon):
             print("Ce n'est pas une arme.")
             return
@@ -91,7 +90,6 @@ class Personnage:
         print(f"{self.nom} équipe {weapon.name} (+{weapon.attack_bonus} ATK).")
 
     def equip_armor(self, armor):
-        """Équipe 1 armure, applique son bonus via la propriété defense."""
         if not isinstance(armor, Armor):
             print("Ce n'est pas une armure.")
             return
@@ -108,11 +106,9 @@ class Personnage:
 # =========================
 # Items / Inventaire
 # =========================
-
 class Item:
     def __init__(self, name):
         self.name = name
-
 
 class Weapon(Item):
     def __init__(self, name, attack_bonus=0, int_bonus=0):
@@ -168,7 +164,6 @@ class Inventory:
 # =========================
 # Compétences (mêmes qu’avant)
 # =========================
-
 class Competence:
     def __init__(self, nom, effet=None):
         self.nom = nom
@@ -485,7 +480,6 @@ def reduire_degats_par_bouclier(entite, degats):
 
 
 def est_etourdi(entite):
-    """Renvoie True si un statut Etourdissement actif est présent."""
     for statut in entite.statuts:
         if isinstance(statut, Stun):
             return True
@@ -497,7 +491,6 @@ def est_etourdi(entite):
 # =====================
 
 def calcul_degats(attaquant, cible):
-    """Dégâts physiques de base avec variance et critique."""
     defense_cible = getattr(cible, "defense", 0)
     base = attaquant.force1 - defense_cible
     variance = random.randint(-2, 2)
@@ -625,7 +618,6 @@ class Zone:
 # =========================
 
 def combat_interactif(personnage, ennemi):
-    """Combat avec menu interactif."""
     tour = 1
     while personnage.pv > 0 and ennemi.pv > 0:
         print(f"\n--- Tour {tour} ---")
@@ -730,7 +722,6 @@ def jeu_principal():
         print("\n LÉGENDE ACCOMPLIE ! Le village est sauvé !")
 
 def nouvelle_partie():
-    """Gestion propre de nouvelle partie."""
     global joueur, jeu
     
     diff = input("Difficulté (f/n/d) [n] : ").lower() or 'n'
@@ -751,7 +742,6 @@ def nouvelle_partie():
     return joueur, jeu
 
 def print_status(joueur, jeu):
-    """Menu status détaillé."""
     print(f"\n {joueur.nom} ({joueur.type})")
     print(f" PV: {joueur.pv}/{joueur.pv_max} | ATK: {joueur.attaque}")
     print(f" DEF: {joueur.defense} | INT: {joueur.intelligence}")
@@ -815,7 +805,6 @@ class Jeu:
         self.nb_explorations_foret = 0
         
     def tirer_evenement(self, evenements):
-        """Tirage pondéré d'événement."""
         evenements_possibles = []
         poids_total = 0
         for evt, poids in evenements:
@@ -1136,11 +1125,10 @@ def to_dict(self) -> Dict[str, Any]:  # Pour Consumable
 # MÉTHODES JEU SAUVEGARDE
 # ==========================
 
-# Remplace la méthode sauvegarder existante dans Jeu
 def sauvegarder(self, joueur, nom_fichier="sauvegarde.json"):
     """Sauvegarde complète du jeu."""
     sauvegarde = SauvegardeJeu()
-    sauvegarde.personnage = SauvegardePersonnage(**joueur.to_dict())  # joueur passé en paramètre
+    sauvegarde.personnage = SauvegardePersonnage(**joueur.to_dict())
     sauvegarde.position = self.position
     sauvegarde.quete_etat = self.quete.etat
     sauvegarde.or_ = self.or_
